@@ -138,7 +138,7 @@ void get4Byte(char (*array)[4] , NSInteger size){
          00：表示是AVC序列头
          00 00 00 ：cts为0
          01 ：版本号
-         64 00 2a：profile level id，sps的三个字节，64表示是h264 high profile，2a表示level。
+         64 00 2a：profile level id，sps的第一二三个字节，64表示是h264 high profile，2a表示level。
          FF：NALU长度，
          E1：表示下面紧跟SPS有一个。
          00 1e:    前面是两个字节的sps长度，表示后面的sps的长度是1e大小。
@@ -148,7 +148,9 @@ void get4Byte(char (*array)[4] , NSInteger size){
          68 eb ec b2 2c：pps的数据
          00 00 …….这是下一个tag 的内容了
          */
-        char avcHeader[] = {0x17, 0x00, 0x00, 0x00, 0x00, 0x01, 0x42, 0x80, 0x0D, 0xFF, 0xE1};
+        Byte *contentByte = (Byte *)[[self.VideoListArray objectAtIndex:0] bytes];
+
+        char avcHeader[] = {0x17, 0x00, 0x00, 0x00, 0x00, 0x01, contentByte[1], contentByte[2], contentByte[3], 0xFF, 0xE1};
         [writer appendBytes:&avcHeader length:sizeof(avcHeader)];//18
         
         /** sps 长度 */
