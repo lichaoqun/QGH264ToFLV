@@ -149,7 +149,6 @@ void get4Byte(char (*array)[4] , NSInteger size){
          00 00 …….这是下一个tag 的内容了
          */
         Byte *contentByte = (Byte *)[[self.VideoListArray objectAtIndex:0] bytes];
-
         char avcHeader[] = {0x17, 0x00, 0x00, 0x00, 0x00, 0x01, contentByte[1], contentByte[2], contentByte[3], 0xFF, 0xE1};
         [writer appendBytes:&avcHeader length:sizeof(avcHeader)];//18
         
